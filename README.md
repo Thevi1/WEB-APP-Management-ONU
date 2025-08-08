@@ -7,6 +7,27 @@ Web app ini menggunakan flask vesi 3.1.1
 
 # Install
 
-Pertama jalankan perintah pip install -m requirements.txt
+Pertama jalankan perintah ``` pip install -m requirements.txt ```
 
-# 
+Selanjutkan jalankan perintah ```python app.py```
+
+# Feature
+ * **dashboard** - Untuk monitor semua perangkat seperti OLT dan ONU
+ * **billing & invoice** - Untuk generate generate invoice dan billing 
+ * **Voucher**  - Untuk generate voucher pengguna hotspot 
+ * **Topologi Jaringan** - Untuk Monitor Map lokasi ODP, ONU dan end user
+ * **Device Management** - Untuk konfigurasi Onu user 
+* **Pengaturan** - Untuk mengatur user dan login management seperti super admin dan user biasa
+
+# TO DO LIST 
+
+* Buat fitur billing & invoice
+* Buat fitur Voucher
+* Integrasi map untuk Topologin Jaringan
+* Buat fitur Device Management Untuk konfigurasi Onu user 
+* Buat fitur Pengaturan
+* Integrasi dengan data base
+* Integrasi dengan ACS untuk manage ONU dan OLT
+
+# Dislamer
+Fitur tersedia hanya dashboard menggunakan dummy data, dan belum terintegrasi dengan data base dan api
