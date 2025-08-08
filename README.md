@@ -30,7 +30,7 @@ Selanjutkan jalankan perintah ```python app.py```
 * Integrasi dengan data base
 * Integrasi dengan ACS untuk manage ONU dan OLT
 
-# Dislamer
+# Disclaimer
 Fitur tersedia hanya dashboard menggunakan dummy data, dan belum terintegrasi dengan data base dan api
 
 # UI Feature
