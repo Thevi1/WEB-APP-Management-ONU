@@ -14,7 +14,7 @@ dummy_users = [
 def generate_sample_devices():
     """Generate sample ONU devices data"""
     devices = []
-    for i in range(35):
+    for i in range(100):
         device = {
             'id': i + 1,
             'serial_number': f"98:13:{random.randint(10,99)}:{random.randint(10,99)}:{random.randint(10,99)}:{random.randint(10,99)}",

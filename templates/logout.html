@@ -8,12 +8,15 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         body {
-            background: #181a1b;
+            background: url(../static/img/7398642.jpg);
             color: #f0f6fc;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+        .text-white{
+            color: #ffffff;
         }
         .card {
             background: #23272b;
@@ -56,21 +59,31 @@
             margin-bottom: 1rem;
         }
         .text-muted {
-            color: #8b949e !important;
+            color: #bec4ca !important;
         }
+        .glass-effect {
+            /* From https://css.glass */
+            background: rgba(255, 255, 255, 0.0);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(17.7px);
+            -webkit-backdrop-filter: blur(17.7px);
+            border: 1px solid rgba(255, 255, 255, 0.30);
+        }
+
     </style>
 </head>
 <body>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6 col-lg-4">
-                <div class="card">
-                    <div class="card-header text-center py-4">
+                <div class="card glass-effect">
+                    <div class="card-header text-center py-4 glass-effect">
                         <div class="logout-icon">
                             <i class="fas fa-sign-out-alt"></i>
                         </div>
                         <h4 class="mb-0">Logout</h4>
-                        <p class="text-muted mb-0">Anda yakin ingin keluar dari sistem?</p>
+                        <p class="mb-0">Anda yakin ingin keluar dari sistem?</p>
                     </div>
                     <div class="card-body p-4">
                         <div class="text-center mb-4">

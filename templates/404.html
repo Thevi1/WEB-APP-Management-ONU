@@ -8,7 +8,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: url(../static/img/7398642.jpg);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -65,23 +65,26 @@
             50% { transform: translateY(-20px); }
         }
 
-        .btn-home {
-            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
-            border: none;
-            padding: 12px 30px;
-            border-radius: 50px;
-            color: white;
+        .btn-grad {background: linear-gradient(to right, #1A2980 0%, #26D0CE  51%, #1A2980  100%)}
+        .btn-grad {
+            margin: 10px;
+            padding: 15px 45px;
+            text-align: center;
+            transition: all 0.3s ease;
             font-weight: bold;
+            background-size: 200% auto;
+            color: white;            
+            box-shadow: 0 0 20px #eee;
+            border-radius: 10px;
             text-decoration: none;
             display: inline-block;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
-        .btn-home:hover {
+        .btn-grad:hover {
+            background-position: right center; /* change the direction of the change here */
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-            color: white;
+            color: #fff;
+            text-decoration: none;
         }
 
         .btn-back {
@@ -108,7 +111,7 @@
             border-radius: 15px;
             padding: 2rem;
             margin-top: 2rem;
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.30);
         }
 
         .suggestion-list {
@@ -176,7 +179,7 @@
         </div>
 
         <div class="mt-4">
-            <a href="{{ url_for('dashboard') if session.get('user') else url_for('login') }}" class="btn-home">
+            <a href="{{ url_for('dashboard') if session.get('user') else url_for('login') }}" class="btn-grad">
                 <i class="fas fa-home me-2"></i>
                 {% if session.get('user') %}
                     Kembali ke Dashboard
