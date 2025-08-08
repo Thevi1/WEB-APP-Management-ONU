@@ -15,8 +15,8 @@
                     <img src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" class="rounded-circle" width="36" height="36" alt="user">
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                    <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Profile</a></li>
-                    <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('profile') }}"><i class="fas fa-user me-2"></i>Profile</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('setting')}}"><i class="fas fa-cog me-2"></i>Settings</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item text-danger" href="{{ url_for('logout_confirm') }}"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
                 </ul>
