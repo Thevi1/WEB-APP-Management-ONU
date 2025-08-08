@@ -128,9 +128,9 @@ def dashboard():
 
 @app.route('/device_management')
 def device_management():
-    # if 'user' not in session:
-    #     flash('Silakan login terlebih dahulu!', 'error')
-    #     return redirect(url_for('login'))
+    if 'user' not in session:
+        flash('Silakan login terlebih dahulu!', 'error')
+        return redirect(url_for('login'))
     
     # Calculate totals
     total_olt = 5
