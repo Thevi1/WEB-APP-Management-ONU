@@ -11,14 +11,14 @@ Pertama jalankan perintah
 
 ```bash 
 
-pip install -m requirements.txt 
+pip install -r requirements.txt 
 
 ```
 
 Selanjutkan jalankan perintah 
 
  ```bash
- 
+
  python app.py
  
  ```
