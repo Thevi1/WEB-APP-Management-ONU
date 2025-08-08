@@ -1,0 +1,37 @@
+<!-- Sidebar -->
+<nav class="sidebar" style="top:90px;">
+    <div class="p-3">
+        <ul class="nav nav-pills flex-column">
+            <li class="nav-item ">
+                <a class="nav-link side-btn active" href="{{ url_for('dashboard') }}">
+                    <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link side-btn" href="#billing">
+                    <i class="fas fa-file-invoice me-2"></i> Billing & Invoice
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link side-btn" href="#voucher">
+                    <i class="fas fa-ticket-alt me-2"></i> Voucher
+                </a>
+            </li>
+            <li class="nav-item">   
+                <a class="nav-link side-btn" href="#topology">
+                    <i class="fas fa-sitemap me-2"></i> Topologi Jaringan
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link side-btn" href="{{ url_for('device_management') }}">
+                    <i class="fas fa-sitemap me-2"></i> Device Management
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link side-btn" href="#settings">
+                    <i class="fas fa-cog me-2"></i> Pengaturan
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>

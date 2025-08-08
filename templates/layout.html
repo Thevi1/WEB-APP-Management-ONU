@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}MAKELAR - Dashboard{% endblock %}</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/style.css">
+    {% block head_extra %}{% endblock %}
+</head>
+<body>
+    {% include 'partials/navbar.html' %}
+    {% include 'partials/sidebar.html' %}
+
+    {% block content %}{% endblock %}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- {% block scripts %}{% endblock %} -->
+</body>
+</html>

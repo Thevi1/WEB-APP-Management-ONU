@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>500 - Server Error</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .error-container {
+            text-align: center;
+            color: white;
+            max-width: 600px;
+            padding: 2rem;
+        }
+
+        .error-code {
+            font-size: 8rem;
+            font-weight: bold;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            background: linear-gradient(45deg, #fff, #f8f9fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            animation: glitch 2s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+        }
+
+        .error-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .error-message {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .error-icon {
+            font-size: 6rem;
+            margin-bottom: 2rem;
+            opacity: 0.7;
+            animation: shake 3s ease-in-out infinite;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .btn-home {
+            background: linear-gradient(45deg, #fff, #f8f9fa);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            color: #e74c3c;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            color: #c0392b;
+        }
+
+        .btn-back {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-block;
+            margin-left: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-back:hover {
+            background: rgba(255,255,255,0.3);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .error-details {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .error-code {
+                font-size: 5rem;
+            }
+            .error-title {
+                font-size: 2rem;
+            }
+            .error-message {
+                font-size: 1rem;
+            }
+            .error-container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-icon">
+            <i class="fas fa-server"></i>
+        </div>
+        
+        <div class="error-code">500</div>
+        
+        <h1 class="error-title">Server Error</h1>
+        
+        <p class="error-message">
+            Terjadi kesalahan pada server. Tim teknis kami sedang menangani masalah ini. 
+            Silakan coba lagi dalam beberapa saat.
+        </p>
+
+        <div class="error-details">
+            <h5 class="mb-3">
+                <i class="fas fa-tools me-2"></i>
+                Kami sedang memperbaiki masalah ini
+            </h5>
+            <p class="mb-0">
+                Server mengalami masalah internal. Tim teknis telah diberitahu dan sedang bekerja 
+                untuk menyelesaikan masalah ini secepat mungkin.
+            </p>
+        </div>
+
+        <div class="mt-4">
+            <a href="{{ url_for('dashboard') if session.get('user') else url_for('login') }}" class="btn-home">
+                <i class="fas fa-home me-2"></i>
+                {% if session.get('user') %}
+                    Kembali ke Dashboard
+                {% else %}
+                    Ke Halaman Login
+                {% endif %}
+            </a>
+            <a href="javascript:location.reload()" class="btn-back">
+                <i class="fas fa-redo me-2"></i>
+                Refresh
+            </a>
+        </div>
+
+        <div class="mt-4">
+            <small class="text-white-50">
+                <i class="fas fa-exclamation-triangle me-1"></i>
+                Error Code: 500 | Internal Server Error
+            </small>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

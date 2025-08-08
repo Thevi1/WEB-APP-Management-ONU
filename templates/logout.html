@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout - MAKELAR</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #181a1b;
+            color: #f0f6fc;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card {
+            background: #23272b;
+            border: 1px solid #30363d;
+            color: #f0f6fc;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .card-header {
+            background: #2d333b;
+            border-bottom: 1px solid #30363d;
+            border-radius: 12px 12px 0 0 !important;
+        }
+        .btn-primary {
+            background: #0d6efd;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-weight: 600;
+        }
+        .btn-primary:hover {
+            background: #0b5ed7;
+            transform: translateY(-1px);
+        }
+        .btn-outline-secondary {
+            border-color: #6c757d;
+            color: #6c757d;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-weight: 600;
+        }
+        .btn-outline-secondary:hover {
+            background: #6c757d;
+            border-color: #6c757d;
+            color: #fff;
+        }
+        .logout-icon {
+            font-size: 4rem;
+            color: #dc3545;
+            margin-bottom: 1rem;
+        }
+        .text-muted {
+            color: #8b949e !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <div class="card">
+                    <div class="card-header text-center py-4">
+                        <div class="logout-icon">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </div>
+                        <h4 class="mb-0">Logout</h4>
+                        <p class="text-muted mb-0">Anda yakin ingin keluar dari sistem?</p>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="text-center mb-4">
+                            <p class="text-muted">
+                                Anda akan keluar dari akun dan diarahkan ke halaman login.
+                            </p>
+                        </div>
+                        
+                        <div class="d-grid gap-3">
+                            <a href="{{ url_for('logout') }}" class="btn btn-primary">
+                                <i class="fas fa-sign-out-alt me-2"></i>
+                                Ya, Logout Sekarang
+                            </a>
+                            <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>
+                                Kembali ke Dashboard
+                            </a>
+                        </div>
+                        
+                        <div class="text-center mt-4">
+                            <small class="text-muted">
+                                <i class="fas fa-shield-alt me-1"></i>
+                                Sesi Anda akan berakhir setelah logout
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <small class="text-muted">
+                        © 2024 MAKELAR. All rights reserved.
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
