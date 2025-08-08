@@ -17,7 +17,8 @@ Selanjutkan jalankan perintah ```python app.py```
  * **Voucher**  - Untuk generate voucher pengguna hotspot 
  * **Topologi Jaringan** - Untuk Monitor Map lokasi ODP, ONU dan end user
  * **Device Management** - Untuk konfigurasi Onu user 
-* **Pengaturan** - Untuk mengatur user dan login management seperti super admin dan user biasa
+ * **Pengaturan** - Untuk mengatur user dan login management seperti super admin dan user biasa
+ * **Basic Auth** - Sudah ada basih auth untuk user login dan register
 
 # TO DO LIST 
 
@@ -31,3 +32,17 @@ Selanjutkan jalankan perintah ```python app.py```
 
 # Dislamer
 Fitur tersedia hanya dashboard menggunakan dummy data, dan belum terintegrasi dengan data base dan api
+
+# UI Feature
+
+![Login](../WEB-APP-NEW/static/img/login-form.png)
+
+![Alt text](../WEB-APP-NEW/static/img/register-form.png)
+
+![Alt text](../WEB-APP-NEW/static/img/logout-confim.png)
+
+![Alt text](../WEB-APP-NEW/static/img/dashboard-img.png)
+
+
+
+
