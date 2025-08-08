@@ -145,6 +145,47 @@ def device_management():
         total_odp=total_odp,
         total_onu=total_onu)
 
+@app.route('/billing_invoice')
+def billing_invoice():
+    if 'user' not in session:
+        flash('Silakan login terlebih dahulu!', 'error')
+        return redirect(url_for('login'))
+    
+    return render_template('billing_invoice.html')
+
+@app.route('/voucher')
+def voucher():
+    if 'user' not in session:
+        flash('Silakan login terlebih dahulu!', 'error')
+        return redirect(url_for('login'))
+    
+    return render_template('voucher.html')
+
+@app.route('/topologi')
+def topologi():
+    if 'user' not in session:
+        flash('Silakan login terlebih dahulu!', 'error')
+        return redirect(url_for('login'))
+    
+    return render_template('topologi.html')
+    
+
+@app.route('/setting')
+def setting():
+    if 'user' not in session:
+        flash('Silakan login terlebih dahulu!', 'error')
+        return redirect(url_for('login'))
+    
+    return render_template('setting.html')
+
+@app.route('/profile')
+def profile():
+    if 'user' not in session:
+        flash('Silakan login terlebih dahulu!', 'error')
+        return redirect(url_for('login'))
+    
+    return render_template('profile.html')
+
 @app.route('/logout-confirm')
 def logout_confirm():
     if 'user' not in session:
