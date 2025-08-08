@@ -35,13 +35,13 @@ Fitur tersedia hanya dashboard menggunakan dummy data, dan belum terintegrasi de
 
 # UI Feature
 
-![Login](../WEB-APP-NEW/static/img/login-form.png)
+![Login](../static/img/login-form.png)
 
-![Alt text](../WEB-APP-NEW/static/img/register-form.png)
+![Alt text](../static/img/register-form.png)
 
-![Alt text](../WEB-APP-NEW/static/img/logout-confim.png)
+![Alt text](../static/img/logout-confim.png)
 
-![Alt text](../WEB-APP-NEW/static/img/dashboard-img.png)
+![Alt text](../static/img/dashboard-img.png)
 
 
 
