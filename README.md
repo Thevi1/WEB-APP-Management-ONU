@@ -35,13 +35,13 @@ Fitur tersedia hanya dashboard menggunakan dummy data, dan belum terintegrasi de
 
 # UI Feature
 
-![Login](../static/img/login-form.png)
+![Login](https://raw.githubusercontent.com/Thevi1/WEB-APP-Management-ONU/main/static/img/login-form.png)
 
-![Alt text](../static/img/register-form.png)
+![Alt text](https://raw.githubusercontent.com/Thevi1/WEB-APP-Management-ONU/main/static/img/register-form.png)
 
-![Alt text](../static/img/logout-confim.png)
+![Alt text](https://raw.githubusercontent.com/Thevi1/WEB-APP-Management-ONU/main/static/img/logout-confim.png)
 
-![Alt text](../static/img/dashboard-img.png)
+![Alt text](https://raw.githubusercontent.com/Thevi1/WEB-APP-Management-ONU/main/static/img/dashboard-img.png)
 
 
 
