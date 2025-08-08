@@ -7,9 +7,21 @@ Web app ini menggunakan flask vesi 3.1.1
 
 # Install
 
-Pertama jalankan perintah ``` pip install -m requirements.txt ```
+Pertama jalankan perintah 
 
-Selanjutkan jalankan perintah ```python app.py```
+```bash 
+
+pip install -m requirements.txt 
+
+```
+
+Selanjutkan jalankan perintah 
+
+ ```bash
+ 
+ python app.py
+ 
+ ```
 
 # Feature
  * **dashboard** - Untuk monitor semua perangkat seperti OLT dan ONU
@@ -31,7 +43,7 @@ Selanjutkan jalankan perintah ```python app.py```
 * Integrasi dengan ACS untuk manage ONU dan OLT
 
 # Disclaimer
-Fitur tersedia hanya dashboard menggunakan dummy data, dan belum terintegrasi dengan data base dan api
+Fitur tersedia hanya dashboard menggunakan dummy data, dan belum terintegrasi dengan database dan api
 
 # UI Feature
 
