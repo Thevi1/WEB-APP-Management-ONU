@@ -16,6 +16,19 @@
     {% block content %}{% endblock %}
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    {% block scripts %}{% endblock %}
 </body>
+{% block scripts %}{% endblock %}
+<script>
+    // Tab switching functionality
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab-btn').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            // Add active class to clicked tab
+            this.classList.add('active');
+        });
+    });
+</script>
 </html>

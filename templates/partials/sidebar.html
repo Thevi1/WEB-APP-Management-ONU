@@ -3,61 +3,35 @@
     <div class="p-3">
         <ul class="nav nav-pills flex-column">
             <li class="nav-item ">
-                <a class="nav-link side-btn active" href="{{ url_for('dashboard') }}">
+                <a class="nav-link side-btn {% if request.endpoint == 'dashboard' %}active{% endif %}" href="{{ url_for('dashboard') }}">
                     <i class="fas fa-tachometer-alt me-2"></i> Dashboard
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link side-btn" href="{{ url_for('billing_invoice') }}">
+                <a class="nav-link side-btn {% if request.endpoint == 'billing_invoice' %}active{% endif %}" href="{{ url_for('billing_invoice') }}">
                     <i class="fas fa-file-invoice me-2"></i> Billing & Invoice
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link side-btn" href="{{ url_for('voucher') }}">
+                <a class="nav-link side-btn {% if request.endpoint == 'voucher' %}active{% endif %}" href="{{ url_for('voucher') }}">
                     <i class="fas fa-ticket-alt me-2"></i> Voucher
                 </a>
             </li>
             <li class="nav-item">   
-                <a class="nav-link side-btn" href="{{ url_for('topologi') }}">
+                <a class="nav-link side-btn {% if request.endpoint == 'topologi' %}active{% endif %}" href="{{ url_for('topologi') }}">
                     <i class="fas fa-sitemap me-2"></i> Topologi Jaringan
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link side-btn" href="{{ url_for('device_management') }}">
+                <a class="nav-link side-btn {% if request.endpoint == 'device_management' %}active{% endif %}" href="{{ url_for('device_management') }}">
                     <i class="fa-solid fa-toolbox"></i> Device Management
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link side-btn" href="{{ url_for('setting') }}">
+                <a class="nav-link side-btn {% if request.endpoint == 'setting' %}active{% endif %}" href="{{ url_for('setting') }}">
                     <i class="fas fa-cog me-2"></i> Pengaturan
                 </a>
             </li>
         </ul>
     </div>
 </nav>
-{% block scripts %}
-<script>
-        // Tab switching functionality
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                // Remove active class from all tabs
-                document.querySelectorAll('.tab-btn').forEach(tab => {
-                    tab.classList.remove('active');
-                });
-                // Add active class to clicked tab
-                this.classList.add('active');
-            });
-        });
-
-        document.querySelectorAll('.side-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                // Remove active class from all tabs
-                document.querySelectorAll('.side-btn').forEach(tab => {
-                    tab.classList.remove('active');
-                });
-                // Add active class to clicked tab
-                this.classList.add('active');
-            });
-        });
-</script>
-{% endblock %}

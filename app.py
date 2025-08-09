@@ -4,7 +4,6 @@ import random
 import math
 from datetime import datetime, timedelta, timezone
 from werkzeug.security import generate_password_hash, check_password_hash
-import mysql.connector
 from mysql.connector import pooling, Error
 from dotenv import load_dotenv
 
@@ -274,7 +273,7 @@ def dashboard():
     next_page = page + 1 if has_next else None
 
     return render_template(
-        'dashboard.html',
+        'menu/dashboard.html',
         onus=onus_page,
         total_olt=total_olt,
         total_odc=total_odc,
@@ -303,7 +302,7 @@ def device_management():
     total_odp = 48
     total_onu = len(onu_data)
     
-    return render_template('device_management.html', 
+    return render_template('/menu/device_management.html', 
         onus=onu_data,
         total_olt=total_olt,
         total_odc=total_odc,
@@ -316,7 +315,7 @@ def billing_invoice():
         flash('Silakan login terlebih dahulu!', 'error')
         return redirect(url_for('login'))
     
-    return render_template('billing_invoice.html')
+    return render_template('menu/billing_invoice.html')
 
 @app.route('/voucher')
 def voucher():
@@ -324,7 +323,7 @@ def voucher():
         flash('Silakan login terlebih dahulu!', 'error')
         return redirect(url_for('login'))
     
-    return render_template('voucher.html')
+    return render_template('menu/voucher.html')
 
 @app.route('/topologi')
 def topologi():
@@ -332,7 +331,7 @@ def topologi():
         flash('Silakan login terlebih dahulu!', 'error')
         return redirect(url_for('login'))
     
-    return render_template('topologi.html')
+    return render_template('menu/topologi.html')
     
 
 @app.route('/setting')
@@ -341,7 +340,7 @@ def setting():
         flash('Silakan login terlebih dahulu!', 'error')
         return redirect(url_for('login'))
     
-    return render_template('setting.html')
+    return render_template('menu/setting.html')
 
 @app.route('/profile')
 def profile():
@@ -349,7 +348,7 @@ def profile():
         flash('Silakan login terlebih dahulu!', 'error')
         return redirect(url_for('login'))
     
-    return render_template('profile.html')
+    return render_template('menu/profile.html')
 
 @app.route('/logout-confirm')
 def logout_confirm():
