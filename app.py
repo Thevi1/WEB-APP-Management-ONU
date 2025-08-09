@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 import os
 import random
+import math
 from datetime import datetime, timedelta, timezone
 from werkzeug.security import generate_password_hash, check_password_hash
 import mysql.connector
@@ -82,7 +83,7 @@ def init_db():
 def generate_sample_devices():
     """Generate sample ONU devices data"""
     devices = []
-    for i in range(100):
+    for i in range(500):
         device = {
             'id': i + 1,
             'serial_number': f"98:13:{random.randint(10,99)}:{random.randint(10,99)}:{random.randint(10,99)}:{random.randint(10,99)}",
@@ -246,13 +247,49 @@ def dashboard():
     total_odc = 12
     total_odp = 48
     total_onu = len(onu_data)
-    
-    return render_template('dashboard.html', 
-        onus=onu_data,
+
+    # Pagination params
+    try:
+        page = int(request.args.get('page', 1))
+    except ValueError:
+        page = 1
+    try:
+        per_page = int(request.args.get('per_page', 10))
+    except ValueError:
+        per_page = 10
+
+    per_page = max(1, min(per_page, 100))  # batas aman
+    total_pages = max(1, math.ceil(total_onu / per_page))
+    page = max(1, min(page, total_pages))
+
+    start = (page - 1) * per_page
+    end = start + per_page
+    onus_page = onu_data[start:end]
+
+    start_index = 0 if total_onu == 0 else start + 1
+    end_index = 0 if total_onu == 0 else min(end, total_onu)
+    has_prev = page > 1
+    has_next = page < total_pages
+    prev_page = page - 1 if has_prev else None
+    next_page = page + 1 if has_next else None
+
+    return render_template(
+        'dashboard.html',
+        onus=onus_page,
         total_olt=total_olt,
         total_odc=total_odc,
         total_odp=total_odp,
-        total_onu=total_onu)
+        total_onu=total_onu,
+        page=page,
+        per_page=per_page,
+        total_pages=total_pages,
+        start_index=start_index,
+        end_index=end_index,
+        has_prev=has_prev,
+        has_next=has_next,
+        prev_page=prev_page,
+        next_page=next_page,
+    )
 
 @app.route('/device_management')
 def device_management():

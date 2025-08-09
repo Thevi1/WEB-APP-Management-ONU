@@ -98,6 +98,20 @@
                 </button>
             </div>
         </div>
+        <div class="d-flex justify-content-between align-items-center mb-2 mt-2">
+            <div class="text-muted small">
+                Menampilkan {{ start_index }}-{{ end_index }} dari {{ total_onu }} data
+            </div>
+            <form method="get" class="d-flex align-items-center">
+                <label class="me-2 small">Baris per halaman</label>
+                <select name="per_page" class="form-select form-select-sm me-2" style="width:auto" onchange="this.form.submit()">
+                    {% for n in [10,20,50,100] %}
+                    <option value="{{ n }}" {% if per_page == n %}selected{% endif %}>{{ n }}</option>
+                    {% endfor %}
+                </select>
+                <input type="hidden" name="page" value="{{ page }}"/>
+            </form>
+        </div>
         <div class="table-container">
             <div class="table-responsive">
                 <table class="table table-dark table-hover mb-0">
@@ -167,6 +181,33 @@
                 </table>
             </div>
         </div>
+        <nav aria-label="Pagination" class="mt-3">
+            <ul class="pagination pagination-sm justify-content-end">
+                <li class="page-item {% if not has_prev %}disabled{% endif %}">
+                    <a class="page-link" href="{{ url_for('dashboard', page=1, per_page=per_page) }}" tabindex="-1">First</a>
+                </li>
+                <li class="page-item {% if not has_prev %}disabled{% endif %}">
+                    <a class="page-link" href="{{ url_for('dashboard', page=prev_page or 1, per_page=per_page) }}" tabindex="-1">Previous</a>
+                </li>
+
+                {# Windowed page numbers #}
+                {% set window = 2 %}
+                {% set start_p = 1 if page - window < 1 else page - window %}
+                {% set end_p = total_pages if page + window > total_pages else page + window %}
+                {% for p in range(start_p, end_p + 1) %}
+                <li class="page-item {% if p == page %}active{% endif %}">
+                    <a class="page-link" href="{{ url_for('dashboard', page=p, per_page=per_page) }}">{{ p }}</a>
+                </li>
+                {% endfor %}
+
+                <li class="page-item {% if not has_next %}disabled{% endif %}">
+                    <a class="page-link" href="{{ url_for('dashboard', page=next_page or total_pages, per_page=per_page) }}">Next</a>
+                </li>
+                <li class="page-item {% if not has_next %}disabled{% endif %}">
+                    <a class="page-link" href="{{ url_for('dashboard', page=total_pages, per_page=per_page) }}">Last</a>
+                </li>
+            </ul>
+        </nav>
     </main>
     <script>
 
