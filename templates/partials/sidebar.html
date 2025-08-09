@@ -35,3 +35,29 @@
         </ul>
     </div>
 </nav>
+{% block scripts %}
+<script>
+        // Tab switching functionality
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active class from all tabs
+                document.querySelectorAll('.tab-btn').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                // Add active class to clicked tab
+                this.classList.add('active');
+            });
+        });
+
+        document.querySelectorAll('.side-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active class from all tabs
+                document.querySelectorAll('.side-btn').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                // Add active class to clicked tab
+                this.classList.add('active');
+            });
+        });
+</script>
+{% endblock %}

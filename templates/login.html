@@ -202,26 +202,26 @@
             }, 1000); // 1 second delay
         });
         
-        // Auto-hide flash messages after 5 seconds
-        setTimeout(() => {
-            const alerts = document.querySelectorAll('.alert');
-            alerts.forEach(alert => {
-                const bsAlert = new bootstrap.Alert(alert);
-                bsAlert.close();
-            });
-        }, 1000);
+        // // Auto-hide flash messages after 5 seconds
+        // setTimeout(() => {
+        //     const alerts = document.querySelectorAll('.alert');
+        //     alerts.forEach(alert => {
+        //         const bsAlert = new bootstrap.Alert(alert);
+        //         bsAlert.close();
+        //     });
+        // }, 5000);
         
-        // Clear any existing flash messages when page loads
-        window.addEventListener('load', function() {
-            // Remove any "Login berhasil!" messages that might be lingering
-            const alerts = document.querySelectorAll('.alert');
-            alerts.forEach(alert => {
-                const alertText = alert.textContent.toLowerCase();
-                if (alertText.includes('login berhasil') || alertText.includes('login successful')) {
-                    alert.remove();
-                }
-            });
-        });
+        // // Clear any existing flash messages when page loads
+        // window.addEventListener('load', function() {
+        //     // Remove any "Login berhasil!" messages that might be lingering
+        //     const alerts = document.querySelectorAll('.alert');
+        //     alerts.forEach(alert => {
+        //         const alertText = alert.textContent.toLowerCase();
+        //         if (alertText.includes('login berhasil') || alertText.includes('login successful')) {
+        //             alert.remove();
+        //         }
+        //     });
+        // });
     </script>
 </body>
 </html>
