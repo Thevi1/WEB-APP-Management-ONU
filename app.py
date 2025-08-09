@@ -1,15 +1,83 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 import os
 import random
+from datetime import datetime, timedelta, timezone
+from werkzeug.security import generate_password_hash, check_password_hash
+import mysql.connector
+from mysql.connector import pooling, Error
+from dotenv import load_dotenv
+
 
 app = Flask(__name__)
 app.secret_key = 'your-secret-key-here'  # Ganti dengan secret key yang aman
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(
+    minutes=int(os.environ.get('SESSION_LIFETIME_MINUTES', '30'))
+)
 
-# Data dummy untuk testing
-dummy_users = [
-    {'email': 'admin@example.com', 'password': 'admin123', 'name': 'Admin Superadmin'},
-    {'email': 'user@example.com', 'password': 'user123', 'name': 'Regular User'}
-]
+# Konfigurasi MySQL dari environment variable (beri default agar mudah dicoba)
+load_dotenv()
+app.config['MYSQL_HOST'] = os.environ.get('DB_HOST')
+app.config['MYSQL_USER'] = os.environ.get('DB_USER')
+app.config['MYSQL_PASSWORD'] = os.environ.get('DB_PASSWORD')
+app.config['MYSQL_DB'] = os.environ.get('DB_NAME')
+
+# Timeout tidak-aktif (idle) dalam menit
+SESSION_INACTIVITY_TIMEOUT_MINUTES = int(
+    os.environ.get('SESSION_INACTIVITY_MINUTES', '15')
+)
+
+# Inisialisasi pool koneksi MySQL
+db_config = {
+    'host': app.config['MYSQL_HOST'],
+    'user': app.config['MYSQL_USER'],
+    'password': app.config['MYSQL_PASSWORD'],
+    'database': app.config['MYSQL_DB'],
+}
+
+try:
+    connection_pool = pooling.MySQLConnectionPool(
+        pool_name='app_pool', pool_size=5, pool_reset_session=True, **db_config
+    )
+except Error as e:
+    connection_pool = None
+    print(f"Gagal inisialisasi pool DB: {e}")
+
+def get_db_connection():
+    if connection_pool is None:
+        raise RuntimeError("Database connection pool tidak terinisialisasi")
+    return connection_pool.get_connection()
+
+def init_db():
+    """Buat tabel users jika belum ada"""
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS users (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                name VARCHAR(255) NOT NULL,
+                email VARCHAR(255) NOT NULL UNIQUE,
+                password_hash VARCHAR(255) NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+            """
+        )
+        conn.commit()
+    except Exception as e:
+        print(f"init_db error: {e}")
+    finally:
+        try:
+            cursor.close()
+            conn.close()
+        except Exception:
+            pass
+
+# # Data dummy untuk testing
+# dummy_users = [
+#     {'email': 'admin@example.com', 'password': 'admin123', 'name': 'Admin Superadmin'},
+#     {'email': 'user@example.com', 'password': 'user123', 'name': 'Regular User'}
+# ]
 
 def generate_sample_devices():
     """Generate sample ONU devices data"""
@@ -38,7 +106,6 @@ def generate_sample_devices():
         devices.append(device)
     return devices
 
-
 # Data dummy untuk dashboard
 onu_data = generate_sample_devices()
 
@@ -49,6 +116,32 @@ def not_found_error(error):
 @app.errorhandler(500)
 def internal_error(error):
     return render_template('500.html'), 500
+
+@app.before_request
+def enforce_session_policy():
+    """Set sesi menjadi permanent dan cek idle-timeout."""
+    session.permanent = True
+    now = datetime.now(timezone.utc)
+    last_activity_iso = session.get('last_activity')
+
+    if last_activity_iso is not None:
+        try:
+            last_activity = datetime.fromisoformat(last_activity_iso)
+        except Exception:
+            last_activity = None
+
+        # Normalisasi: jika value lama tanpa tzinfo (naive), anggap UTC
+        if last_activity and last_activity.tzinfo is None:
+            last_activity = last_activity.replace(tzinfo=timezone.utc)
+
+        if last_activity and (now - last_activity).total_seconds() > (
+            SESSION_INACTIVITY_TIMEOUT_MINUTES * 60
+        ):
+            session.clear()
+            flash('Sesi berakhir karena tidak ada aktivitas. Silakan login kembali.', 'info')
+            return redirect(url_for('login'))
+
+    session['last_activity'] = now.isoformat()
 
 @app.route('/')
 def index():
@@ -61,16 +154,33 @@ def login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
-        
-        # Check credentials
-        user = next((user for user in dummy_users if user['email'] == email and user['password'] == password), None)
-        
-        if user:
-            session['user'] = user
-            flash('Login berhasil!', 'success')
-            return redirect(url_for('dashboard'))
-        else:
-            flash('Email atau password salah!', 'error')
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor(dictionary=True)
+            cursor.execute(
+                "SELECT id, name, email, password_hash FROM users WHERE email=%s LIMIT 1",
+                (email,),
+            )
+            row = cursor.fetchone()
+            if row and check_password_hash(row['password_hash'], password):
+                session['user'] = {
+                    'id': row['id'],
+                    'email': row['email'],
+                    'name': row['name'],
+                }
+                session['last_activity'] = datetime.now(timezone.utc).isoformat()
+                flash('Login berhasil!', 'success')
+                return redirect(url_for('dashboard'))
+            else:
+                flash('Email atau password salah!', 'error')
+        except Exception as e:
+            flash(f'Kesalahan server: {e}', 'error')
+        finally:
+            try:
+                cursor.close()
+                conn.close()
+            except Exception:
+                pass
     
     return render_template('login.html')
 
@@ -87,23 +197,41 @@ def signup():
             flash('Password tidak cocok!', 'error')
             return render_template('signup.html')
         
-        # Check if email already exists
-        if any(user['email'] == email for user in dummy_users):
-            flash('Email sudah terdaftar!', 'error')
-            return render_template('signup.html')
-        
         # Check if terms are accepted
         terms = request.form.get('terms')
         if not terms:
             flash('Anda harus menyetujui Terms and Conditions!', 'error')
             return render_template('signup.html')
         
-        # Add new user (in real app, save to database)
-        new_user = {'email': email, 'password': password, 'name': name}
-        dummy_users.append(new_user)
-        
-        flash('Registrasi berhasil! Silakan login.', 'success')
-        return redirect(url_for('login'))
+        # Simpan user ke database
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+
+            # Cek apakah email sudah ada
+            cursor.execute("SELECT 1 FROM users WHERE email=%s LIMIT 1", (email,))
+            exists = cursor.fetchone()
+            if exists:
+                flash('Email sudah terdaftar!', 'error')
+                return render_template('signup.html')
+
+            password_hash = generate_password_hash(password)
+            cursor.execute(
+                "INSERT INTO users (name, email, password_hash) VALUES (%s, %s, %s)",
+                (name, email, password_hash),
+            )
+            conn.commit()
+
+            flash('Registrasi berhasil! Silakan login.', 'success')
+            return redirect(url_for('login'))
+        except Exception as e:
+            flash(f'Kesalahan server: {e}', 'error')
+        finally:
+            try:
+                cursor.close()
+                conn.close()
+            except Exception:
+                pass
     
     return render_template('signup.html')
     
@@ -209,4 +337,10 @@ def clear_flash():
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
+    # Inisialisasi DB pada startup
+    try:
+        init_db()
+    except Exception as e:
+        print(f"Lewati init_db karena error: {e}")
+
     app.run(debug=True)
